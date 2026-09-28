@@ -1,10 +1,10 @@
 {
   "mode": "init",
-  "status": "partial",
-  "message": "2/200거래일 확보 (호출 한도 도달) - 다시 실행하면 이어서 받음",
+  "status": "success",
+  "message": "200거래일 적재 완료",
   "latest_date": "20260923",
-  "stored_days": 2,
-  "api_calls": 8,
-  "rows_written": 5155,
-  "finished_at_kst": "2026-09-28 15:32:08"
+  "stored_days": 200,
+  "api_calls": 426,
+  "rows_written": 511083,
+  "finished_at_kst": "2026-09-28 16:19:19"
 }
