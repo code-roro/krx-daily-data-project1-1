@@ -1,0 +1,48 @@
+name: daily-update
+
+on:
+  # 주 실행: cron-job.org 가 매 평일 08:05(KST)에 GitHub API 로 호출
+  workflow_dispatch:
+  # 백업: cron-job.org 가 실패했을 때 대비 (UTC 23:40 = KST 08:40, 일~목 UTC = 월~금 KST)
+  # 이미 적재돼 있으면 몇 초 만에 종료되므로 중복 실행돼도 안전
+  schedule:
+    - cron: "40 23 * * 0-4"
+
+concurrency:
+  group: krx-pipeline
+  cancel-in-progress: false
+
+permissions:
+  contents: write   # status/latest.json 커밋용
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Daily update
+        env:
+          KRX_AUTH_KEY: ${{ secrets.KRX_AUTH_KEY }}
+          TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
+          TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
+        run: python daily_update.py
+
+      - name: Commit status
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add status/ || true
+          if ! git diff --cached --quiet; then
+            git commit -m "status: daily $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+            git pull --rebase && git push
+          fi
