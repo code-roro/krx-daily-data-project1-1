@@ -1,0 +1,10 @@
+{
+  "mode": "init",
+  "status": "partial",
+  "message": "2/200거래일 확보 (호출 한도 도달) - 다시 실행하면 이어서 받음",
+  "latest_date": "20260923",
+  "stored_days": 2,
+  "api_calls": 8,
+  "rows_written": 5155,
+  "finished_at_kst": "2026-09-28 15:32:08"
+}
