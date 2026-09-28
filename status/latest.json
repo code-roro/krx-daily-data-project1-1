@@ -1,10 +1,11 @@
 {
-  "mode": "init",
+  "mode": "daily",
   "status": "success",
-  "message": "200거래일 적재 완료",
+  "message": "새로 적재할 거래일 없음(휴장일)",
+  "target_date": null,
   "latest_date": "20260923",
   "stored_days": 200,
-  "api_calls": 426,
-  "rows_written": 511083,
-  "finished_at_kst": "2026-09-28 16:19:19"
+  "rows_written": 0,
+  "attempts": 1,
+  "finished_at_kst": "2026-09-28 16:32:08"
 }
