@@ -1,11 +1,11 @@
 {
   "mode": "daily",
   "status": "success",
-  "message": "새로 적재할 거래일 없음(휴장일)",
-  "target_date": null,
-  "latest_date": "20260923",
+  "message": "20260928 적재 완료",
+  "target_date": "20260928",
+  "latest_date": "20260928",
   "stored_days": 200,
-  "rows_written": 0,
+  "rows_written": 2578,
   "attempts": 1,
-  "finished_at_kst": "2026-09-28 16:38:07"
+  "finished_at_kst": "2026-09-29 08:06:23"
 }
