@@ -82,7 +82,8 @@ def short_code(isu_cd: str) -> str:
 
 
 def is_target(row: dict) -> bool:
-    """우선주·스팩 제외 (리츠는 포함)"""
+    """우선주·스팩 제외 (리츠는 포함).
+    소속부(SECT_TP_NM)는 저장하지 않지만 스팩 판별에만 참고한다."""
     code = short_code(row.get("ISU_CD", ""))
     name = row.get("ISU_NM", "") or ""
     sect = (row.get("SECT_TP_NM", "") or "").upper()
@@ -101,7 +102,6 @@ def normalize(row: dict, market: str, bas_dd: str) -> dict:
         "isu_cd": short_code(row.get("ISU_CD", "")),
         "isu_nm": (row.get("ISU_NM") or "").strip(),
         "market": market,
-        "sect_tp_nm": (row.get("SECT_TP_NM") or "").strip() or None,
         "open_prc": _int(row.get("TDD_OPNPRC")),
         "high_prc": _int(row.get("TDD_HGPRC")),
         "low_prc": _int(row.get("TDD_LWPRC")),

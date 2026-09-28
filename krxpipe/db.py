@@ -4,7 +4,7 @@ import json
 from .calendar_kr import now_kst
 
 PRICE_COLS = [
-    "bas_dd", "isu_cd", "isu_nm", "market", "sect_tp_nm",
+    "bas_dd", "isu_cd", "isu_nm", "market",
     "open_prc", "high_prc", "low_prc", "close_prc", "chg", "fluc_rt",
     "volume", "trd_value", "mktcap", "list_shrs",
 ]
@@ -16,7 +16,6 @@ SCHEMA = [
         isu_cd     TEXT NOT NULL,   -- 종목코드(단축)
         isu_nm     TEXT,            -- 종목명
         market     TEXT,            -- KOSPI / KOSDAQ
-        sect_tp_nm TEXT,            -- 소속부
         open_prc   INTEGER,         -- 시가
         high_prc   INTEGER,         -- 고가
         low_prc    INTEGER,         -- 저가
@@ -83,8 +82,17 @@ def ts() -> str:
     return now_kst().strftime("%Y-%m-%d %H:%M:%S")
 
 
+# 예전 버전에서 만들어졌다가 더 이상 쓰지 않는 칸 (있으면 자동 삭제)
+DROPPED_COLUMNS = ["sect_tp_nm"]
+
+
 def ensure_schema(db) -> None:
     db.pipeline([(s, []) for s in SCHEMA])
+    existing = {r["name"] for r in db.query("PRAGMA table_info(daily_price)")}
+    for col in DROPPED_COLUMNS:
+        if col in existing:
+            db.execute(f"ALTER TABLE daily_price DROP COLUMN {col}")
+            print(f"기존 테이블에서 {col} 칸 삭제", flush=True)
 
 
 def upsert_prices(db, rows: list[dict], rows_per_stmt: int = 100, stmts_per_request: int = 8) -> int:
