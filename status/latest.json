@@ -1,11 +1,11 @@
 {
   "mode": "daily",
   "status": "success",
-  "message": "이미 최신 상태(20261023)",
-  "target_date": null,
-  "latest_date": "20261023",
+  "message": "20261026 적재 완료",
+  "target_date": "20261026",
+  "latest_date": "20261026",
   "stored_days": 200,
-  "rows_written": 0,
+  "rows_written": 2582,
   "attempts": 1,
-  "finished_at_kst": "2026-10-26 10:39:05"
+  "finished_at_kst": "2026-10-27 08:11:28"
 }
